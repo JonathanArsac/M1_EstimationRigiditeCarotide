@@ -1,5 +1,3 @@
-% Save DICOM file (4D) to .mat file (3D)
-
 % read DICOM
 dicomfile = 'IM_0031';
 dicomdir = '';
