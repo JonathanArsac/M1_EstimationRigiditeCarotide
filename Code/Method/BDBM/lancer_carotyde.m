@@ -1,36 +1,36 @@
 clear; close all; clc
 
-h_min = 150;
-h_max = 300;
-w_min = 400;
-w_max = 700;
-Z_im=[ h_min  h_max ;   w_min   w_max]; % ROI
+x_min = 150;
+x_max = 550;
+y_min = 100;
+y_max = 450;
+Z_im=[ y_min  y_max ;   x_min   x_max]; % ROI
 Grid=[10 10]; % distance between two pixels to estimate
-L=[30 30]; % block size
+L=[10 10]; % block size
 vI=[1 1]; % interpolation factor of search zones
 nb_it=1;
 dP_ini_limit = [0 0 ; 0 0];
 tR=[1 1 ;1 1]; % maximum displacement that can be estimated
-type_correl = 6;
+type_correl = 1;
 type_calcul_dep = 1;
 type_interp = 1;
 f = [0.13 0.13];
 US_IRM = 0;
 
 load IM_0031.mat
-im = double(im(1:600,1:800,:));
+im = double(im);
 
-debut = 1; pas = 25; fin = 900;
+debut = 1; pas = 5; fin = 100;
 
 % For motion vector plot
-pas_x = 5; pas_y = 5;
+pas_x = 10; pas_y = 10;
 
 
 for i = debut:pas:fin
    
     image(:,:,1)=im(:,:,i); image(:,:,2)=im(:,:,i+pas);
     
-    [chp_dep_est,x_grid,y_grid]=bdbm(image,Z_im,L,Grid,vI,nb_it,type_correl,type_calcul_dep,dP_ini_limit,tR,f,US_IRM);   
+    [chp_dep_est x_grid y_grid]=bdbm(image,Z_im,L,Grid,vI,nb_it,type_correl,type_calcul_dep,dP_ini_limit,tR,f,US_IRM);   
     [chp_dep_int,pts_ax,pts_lat] = denseField(chp_dep_est,x_grid, y_grid,Grid,type_interp);
 
     if i==debut
@@ -60,9 +60,6 @@ for i = debut:pas:fin
 end
 
 figure;
-J1 = DeformMesh(im(h_min:h_max,w_min:w_max,:),[10 10],18:90,28:100,axial_motion,lateral_motion,x_grid-20,y_grid-40,[2 2])
+J1 = DeformMesh(im(y_min:y_max,x_min:x_max,:),[5 5],x_min:x_max,y_min:y_max,axial_motion,lateral_motion,x_grid-20,y_grid-40,[2 2])
 movie(J1,100,5)
 % J1 = DeformMesh45d(im(100:200,20:110,:),[3 3],10:90,20:90,axial_motion,lateral_motion,x_grid-20,y_grid-100,[2 2])
-
-
-
