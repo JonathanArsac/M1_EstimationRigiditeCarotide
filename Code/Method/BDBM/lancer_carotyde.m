@@ -6,7 +6,7 @@ y_min = 100;
 y_max = 450;
 Z_im=[ y_min  y_max ;   x_min   x_max]; % ROI
 Grid=[10 10]; % distance between two pixels to estimate
-L=[10 10]; % block size
+L=[30 30]; % block size
 vI=[1 1]; % interpolation factor of search zones
 nb_it=1;
 dP_ini_limit = [0 0 ; 0 0];
@@ -20,17 +20,16 @@ US_IRM = 0;
 load IM_0031.mat
 im = double(im);
 
-debut = 1; pas = 5; fin = 100;
+debut = 1; pas = 10; fin = 100;
 
 % For motion vector plot
 pas_x = 10; pas_y = 10;
-
 
 for i = debut:pas:fin
    
     image(:,:,1)=im(:,:,i); image(:,:,2)=im(:,:,i+pas);
     
-    [chp_dep_est x_grid y_grid]=bdbm(image,Z_im,L,Grid,vI,nb_it,type_correl,type_calcul_dep,dP_ini_limit,tR,f,US_IRM);   
+    [chp_dep_est,x_grid,y_grid]=bdbm(image,Z_im,L,Grid,vI,nb_it,type_correl,type_calcul_dep,dP_ini_limit,tR,f,US_IRM);   
     [chp_dep_int,pts_ax,pts_lat] = denseField(chp_dep_est,x_grid, y_grid,Grid,type_interp);
 
     if i==debut

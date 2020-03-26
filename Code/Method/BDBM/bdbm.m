@@ -93,14 +93,14 @@ tZ=L-1+sum(tR');
 %Study zone size
 tROI=2*L-2+sum(tR');
 
-%taille de la zone d'étude
+%taille de la zone d'ï¿½tude
 long_Z_im=diff(Z_im(1,:))-tROI(1);
 M_max=fix(long_Z_im/Grid(1))+1;
 larg_Z_im=diff(Z_im(2,:))-tROI(2);
 N_max=fix(larg_Z_im/Grid(2));
-%point de calcul le plus à gauche
+%point de calcul le plus ï¿½ gauche
 debut=tZ(2)-tR(2,2)+Z_im(2,1)+fix((larg_Z_im-(N_max-1)*Grid(2))/2);
-%centre de départ
+%centre de dï¿½part
 centre_im_N=fix(N_max/2)*Grid(2)+debut;     %image coordinates
 N_mat_dep=fix(N_max/2)+1;                   %coordinates in the matrix
 
@@ -124,7 +124,7 @@ champ_dep_est=NaN*ones(M_max,N_max,4,2);
 
 % estimate the initial displacement of the first block
 B1 = im(P_dep(1)-ceil(L(1)/2)+1:P_dep(1)-ceil(L(1)/2)+L(1),...
-    P_dep(2)-ceil(L(2)/2)+1:P_dep(2)-ceil(L(2)/2)+L(2),1);
+        P_dep(2)-ceil(L(2)/2)+1:P_dep(2)-ceil(L(2)/2)+L(2),1);
 ZRtest = im(P_dep(1)-ceil(L(1)/2)+1-dP_ini_limit(1,1):P_dep(1)-ceil(L(1)/2)+L(1)+dP_ini_limit(1,2),...
     P_dep(2)-ceil(L(2)/2)+1-dP_ini_limit(2,1):P_dep(2)-ceil(L(2)/2)+L(2)+dP_ini_limit(2,2),2);
 
@@ -199,7 +199,7 @@ for cercle_it=0:nb_boucle
                 P2_ini = P2_im1(P(1)-L(1):P(1)+L(1),P(2)-L(2):P(2)+L(2));
                 P1_ZR = P1_im2(P(1)-L(1)+dP(1):P(1)+L(1)+dP(1),P(2)-L(2)+dP(2):P(2)+L(2)+dP(2));
                 P2_ZR = P2_im2(P(1)-L(1)+dP(1):P(1)+L(1)+dP(1),P(2)-L(2)+dP(2):P(2)+L(2)+dP(2));
-                %estimation du champ de déplacement en P
+                %estimation du champ de dï¿½placement en P
                 dep=bilinearEstimation(Pat_ini,ZR,L,tR,nb_it,vI,t_cor,type_calcul_dep,f,P1_ini,P2_ini,P1_ZR,P2_ZR,US_IRM);
             else
                 
@@ -211,8 +211,16 @@ for cercle_it=0:nb_boucle
                 ZR=im(PsZ(1):PsZ(1)+tROI(1),PsZ(2):PsZ(2)+tROI(2),n+1);  %Search zone on the second image
                 catch
                 end
-                %estimation du champ de déplacement en P
-                dep=bilinearEstimation(Pat_ini,ZR,L,tR,nb_it,vI,t_cor,type_calcul_dep,f,0,0,0,0,0);
+                
+                %calcule de l'Ã©cart type
+                %estimatation si Ã©cart type supÃ©rieur au seuil
+                if std(ZR(:)) > 10
+                    %estimation du champ de dï¿½placement en P
+                    dep=bilinearEstimation(Pat_ini,ZR,L,tR,nb_it,vI,t_cor,type_calcul_dep,f,0,0,0,0,0);
+                else
+                    dep = [0 0; 0 0; 0 0; 0 0];
+                end
+
             end
 
             %add the initial translations
@@ -235,7 +243,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function chp_dep=bilinearEstimation(PA,ZR,L,tR,nb_it,vI,type_correl,type_calcul_dep,f,P1_ini,P2_ini,P1_ZR,P2_ZR,US_IRM)
 
-% fonction qui estime localement les paramètres du modèle bilinéaire
+% fonction qui estime localement les paramï¿½tres du modï¿½le bilinï¿½aire
 
 %%% INPUT
 % PA= PA = study zone on the initial image
@@ -260,7 +268,7 @@ function chp_dep=bilinearEstimation(PA,ZR,L,tR,nb_it,vI,type_correl,type_calcul_
 
 
 %%%%%%%%%%%% CONSTANTES %%%%%%%%%%%%%%%
-%matrice calcul des déplacements
+%matrice calcul des dï¿½placements
 M_dep = 0.5* [-1/(L(2)-1)             1/(L(2)-1)             1/(L(2)-1)            -1/(L(2)-1) ; ...
     -1/(L(1)-1)            -1/(L(1)-1)             1/(L(1)-1)             1/(L(1)-1) ; ...
     2/((L(1)-1)*(L(2)-1)) -2/((L(1)-1)*(L(2)-1))  2/((L(1)-1)*(L(2)-1)) -2/((L(1)-1)*(L(2)-1)) ; ...
@@ -321,7 +329,7 @@ for i=1:nb_it
         [ixi,iyi]=meshgrid(pZR(2):1/(vI(2)^i):pZR(2)+L(2)-1+sumtR(2)/(vI(2)^(i-1)),pZR(1):1/(vI(1)^i):pZR(1)+L(1)-1+sumtR(1)/(vI(1)^(i-1)));
     end
 
-    %calcul du déplacement sur chaque pattern
+    %calcul du dï¿½placement sur chaque pattern
     try
         if type_correl == 6
             if i==1 % at the first iteration
