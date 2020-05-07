@@ -37,6 +37,7 @@ for i = debut:pas:fin
     [chp_dep_est,x_grid,y_grid]=bdbm(image,Z_im,L,Grid,vI,nb_it,type_correl,type_calcul_dep,dP_ini_limit,tR,f,US_IRM);   
     [chp_dep_int,pts_ax,pts_lat] = denseField(chp_dep_est,x_grid, y_grid,Grid,type_interp);
     estimation.chp_dep_est(k,:,:,:,:,:) = chp_dep_est;
+    estimation.frames(k) = i;
     if i==debut
         depl_lat_cumule(:,:,1) = chp_dep_int(:,:,2);
         depl_ax_cumule(:,:,1) = chp_dep_int(:,:,1);
