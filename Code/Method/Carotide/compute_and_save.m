@@ -25,7 +25,7 @@ debut = 1; pas = 10; fin = 100;
 % For motion vector plot
 pas_x = 10; pas_y = 10;
 
-out = "/home/foxiler/git/M1_EstimationRigiditeCarotide/Donnees/save_estimation/IM_0021.mat";
+out = "/home/foxiler/git/M1_EstimationRigiditeCarotide/Donnees/save_estimation/estimation_IM_0021.mat";
 k=1;
 progress_bar=timerbar(0,'calculating ...');
 for i = debut:pas:fin
