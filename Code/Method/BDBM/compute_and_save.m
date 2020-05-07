@@ -42,6 +42,8 @@ for i = debut:pas:fin
         depl_ax_cumule(:,:,1) = chp_dep_int(:,:,1);
         estimation.x_grid = x_grid;
         estimation.y_grid = y_grid;
+        estimation.pts_ax = pts_ax;
+        estimation.pts_lat = pts_lat;
     else
         [depl_lat_cumule,depl_ax_cumule] = ...
             displacementReg(pts_ax,pts_lat,chp_dep_int(:,:,1),chp_dep_int(:,:,2),depl_lat_cumule,depl_ax_cumule);
