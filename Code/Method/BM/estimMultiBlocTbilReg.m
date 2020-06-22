@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-cd('E:\Work\ASSESS\Res_imgTag0Roi_Tsys15_Tdia20_Path2_SNR50')
+cd('/home/foxiler/git/M1_EstimationRigiditeCarotide/Donnees/Res_img/')
 
 x = [66:75;112:121;68:77]; y = [100:109;74:83;65:74]; %path2
 
@@ -46,13 +46,14 @@ for k = 0:34
     a = readimg(filename,160,160);
     u(:,:,k+1) = dispx; v(:,:,k+1) = dispy; im(:,:,k+1) = a;
 
-    %% déformation d'un bloc au cours du temps (vraie)
+    %% dï¿½formation d'un bloc au cours du temps (vraie)
 
     imagesc(im(:,:,k+1)); colormap gray;
     for B=1:size(x,1)
         d1_v(k+1,1,B) = dispx(y(B,1),x(B,1));d1_v(k+1,2,B) = dispx(y(B,1),x(B,end));d1_v(k+1,3,B) = dispx(y(B,end),x(B,end));d1_v(k+1,4,B) = dispx(y(B,end),x(B,1));
         d2_v(k+1,1,B) = dispy(y(B,1),x(B,1));d2_v(k+1,2,B) = dispy(y(B,1),x(B,end));d2_v(k+1,3,B) = dispy(y(B,end),x(B,end));d2_v(k+1,4,B) = dispy(y(B,end),x(B,1));
 
+        %% line(x1, x2, y1, y2)
         line([x(B,1)+d1_v(k+1,1,B) x(B,end)+d1_v(k+1,2,B)], [y(B,1)+d2_v(k+1,1,B) y(B,1)+d2_v(k+1,2,B)],'Color','w')
         line([x(B,end)+d1_v(k+1,2,B) x(B,end)+d1_v(k+1,3,B)], [y(B,1)+d2_v(k+1,2,B) y(B,end)+d2_v(k+1,3,B)],'Color','w')
         line([x(B,end)+d1_v(k+1,3,B) x(B,1)+d1_v(k+1,4,B)], [y(B,end)+d2_v(k+1,3,B) y(B,end)+d2_v(k+1,4,B)],'Color','w')
@@ -68,7 +69,7 @@ for k = 0:34
     G(k+1)=getframe
 
 
-    %% déformation d'un bloc au cours du temps (estimée)
+    %% dï¿½formation d'un bloc au cours du temps (estimï¿½e)
 
     if k == 0
         % avec initialisation spatiale
@@ -102,7 +103,7 @@ for k = 0:34
     
     imagesc(im(:,:,k+1)); colormap gray;
 
-    for B=1:size(x,1) % pour chaque bloc affiché
+    for B=1:size(x,1) % pour chaque bloc affichï¿½
 
         d1(k+1,1,B)=mean2(chp_dep_int((y(B,1)-L(2)/2-y_grid(1)):(y(B,1)+L(2)/2-y_grid(1)),(x(B,1)-L(1)/2-x_grid(1)):(x(B,1)+L(1)/2-x_grid(1)),2));
         d1(k+1,2,B)=mean2(chp_dep_int((y(B,1)-L(2)/2-y_grid(1)):(y(B,1)+L(2)/2-y_grid(1)),(x(B,end)-L(1)/2-x_grid(1)):(x(B,end)+L(1)/2-x_grid(1)),2));

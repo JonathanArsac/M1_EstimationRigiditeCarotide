@@ -28,11 +28,11 @@ function fout = timerbar(x,whichbar)
 %
 
 if nargin==2 & ischar(whichbar)
-   type=2; %we are initializing
+   type=2; % we are initializing
    name=whichbar;
    t0=clock;
-elseif nargin==2 & isnumeric(whichbar)
-   type=1; %we are updating, given a handle
+elseif nargin==2 & ishandle(whichbar)
+   type=1; % we are updating, given a handle
    f=whichbar;
 elseif nargin==1
    f = findobj(allchild(0),'flat','Tag','TMWTimerbar');

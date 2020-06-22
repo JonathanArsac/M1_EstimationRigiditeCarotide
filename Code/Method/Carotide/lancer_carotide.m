@@ -1,9 +1,9 @@
 clear; close all; clc
 
-x_min = 150;
-x_max = 550;
-y_min = 100;
-y_max = 450;
+x_min = 170;
+x_max = 580;
+y_min = 130;
+y_max = 270;
 Z_im=[ y_min  y_max ;   x_min   x_max]; % ROI
 Grid=[10 10]; % distance between two pixels to estimate
 L=[30 30]; % block size
@@ -13,19 +13,20 @@ dP_ini_limit = [0 0 ; 0 0];
 tR=[1 1 ;1 1]; % maximum displacement that can be estimated
 type_correl = 1;
 type_calcul_dep = 1;
-type_interp = 1;
-f = [0.13 0.13];
+type_interp = 2;
+f = [0 0];
 US_IRM = 0;
 
-load IM_0031.mat
+load IM_0020.mat
 im = double(im);
 
-debut = 1; pas = 10; fin = 100;
+debut = 1; pas = 2; fin = 100;
 
 % For motion vector plot
 pas_x = 10; pas_y = 10;
 
 for i = debut:pas:fin
+    %% 
    
     image(:,:,1)=im(:,:,i); image(:,:,2)=im(:,:,i+pas);
     

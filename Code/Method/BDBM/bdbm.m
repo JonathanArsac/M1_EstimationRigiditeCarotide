@@ -134,14 +134,14 @@ dP_ini_limit=(pos_best_corr-1-dP_ini_limit(:,1)');
 
 
 %progress bar
-% progress_bar=timerbar(0,'calculating ...');
+% progress_bar=timerbar(0,'calculating bdbm ...');
 
 %triangle scan of the image
 for cercle_it=0:nb_boucle
     borne_min_N=max(1-N_mat_dep,-cercle_it);
     borne_max_N=min(N_max-N_mat_dep,cercle_it);
     %progress bar
-%     timerbar(nb_pts_calcul/nb_pts_est,progress_bar);
+    % timerbar(nb_pts_calcul/nb_pts_est, progress_bar);
     nb_pts_calcul=nb_pts_calcul+(borne_max_N-borne_min_N+1);
     %triangle scan of the image
     for jN=borne_min_N:borne_max_N
@@ -214,7 +214,7 @@ for cercle_it=0:nb_boucle
                 
                 %calcule de l'écart type
                 %estimatation si écart type supérieur au seuil
-                if std(ZR(:)) > 10
+                if std(ZR(:)) > 8
                     %estimation du champ de d�placement en P
                     dep=bilinearEstimation(Pat_ini,ZR,L,tR,nb_it,vI,t_cor,type_calcul_dep,f,0,0,0,0,0);
                 else
